@@ -1,0 +1,16 @@
+{
+    "name": "Clayer"
+  , "version": "0.0.1"
+  , "description": "VK.com player based on html5 audio and twitter bootstrap"
+  , "author": "Dmitry Chirkin <dmitry.chirkin@gmail.com>"
+  , "private": true
+  , "dependencies": {
+      "express": "latest"
+    , "jade": "latest"
+    , "socket.io" : "lastest"
+    , "mongoose"  : "latest"
+  }
+  , "scripts": {
+    "start": "node app.js"
+  }
+}

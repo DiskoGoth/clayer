@@ -1,0 +1,36 @@
+extends layout
+
+block append scripts
+    script(type='text/javascript', src='/javascripts/main.js')
+
+block append body
+    .navbar.navbar-fixed-top
+        .navbar-inner
+            .container-fluid
+                a.brand(href="/") Clayer
+                form#do_search.navbar-search.pull-left
+                    input#get_search_query.search-query(type="text", placeholder="Search")
+                    &nbsp;
+                    a#do_search_submit(href="#")
+                        i.icon-music.icon-white
+                ul.nav.pull-right
+                    li
+                        a#do_login(href="#")
+                            i.icon-user.icon-white
+                            &nbsp;
+                            span#get_login Войти ВКонтакте
+
+    .container-fluid
+        .row-fluid
+            .span3
+                .well.sidebar-nav
+                    ul.nav.nav-list
+                        li.nav-header Main
+                        li
+                            a(href="#")
+                                i.icon-search
+                                | Search results
+                        li.nav-header Playlists
+
+            .span9
+                .hero-unit Hello World!
