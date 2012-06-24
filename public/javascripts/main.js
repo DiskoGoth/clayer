@@ -1,6 +1,8 @@
 
 $(document).ready(function(){
 
+    $("audio").mediaelementplayer({defaultAudioHeight: "36px"});
+
     var authInfo = function(response) {
         if (response.session) {
             clayer.init(response.session);
