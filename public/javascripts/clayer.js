@@ -16,7 +16,13 @@ var clayer = {
     },
     initUI: function() {
 
-        this.player =  new MediaElementPlayer("#control-player", {defaultAudioHeight: "36px"});
+        this.player =  new MediaElementPlayer("#control-player", {defaultAudioHeight: "36px",
+            success: function (mediaElement, domObject) {
+
+                // add event listener
+                mediaElement.addEventListener('ended', clayer.next, false);
+            }
+        });
 
         VK.Api.call('users.get', {uids: [this.session.mid], fields:'nickname'}, function(r) {
               $("#get_login").text(r.response[0].nickname);
@@ -34,6 +40,7 @@ var clayer = {
 
 
         $("#container-playlist").on("click", "a", function() {
+            $(this).addClass('current');
             return clayer.play($(this).attr('href'));
         });
 
@@ -44,6 +51,13 @@ var clayer = {
         clayer.player.play();
 
         return false;
+    },
+
+    next: function(event) {
+        var $current = $('#container-playlist .current').removeClass('current');
+        var $next = $current.parents('tr').next().find('a');
+        $next.addClass('current');
+        clayer.play($next.attr('href'));
     },
 
     initUser: function(){
