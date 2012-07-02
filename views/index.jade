@@ -15,22 +15,41 @@ block append body
                         i.icon-music.icon-white
                 ul.nav.pull-left
                     li
-                        audio(src="/mp3/test.mp3")
+                        audio#control-player(src="/mp3/test.mp3")
                 ul.nav.pull-right
                     li
                         a#do_login(href="#")
                             i.icon-user.icon-white
                             &nbsp;
                             span#get_login Войти ВКонтакте
-
     .container-fluid
         .row-fluid
             .span3
-                .well.sidebar-nav
+                .well.sidebar-nav(style="padding: 8px 0;")
                     ul.nav.nav-list
                         li.nav-header Search
+                        li.active
+                            a(href="#") Current...
+                        li.divider
                         li.nav-header Playlists
+                        li.divider
                         li.nav-header Albums
 
+
             .span9
-                .hero-unit Hello World!
+                table#container-playlist.table.table-striped
+                    thead
+                        th #
+                        th Artist
+                        th Title
+                        th Time
+
+block append hidden
+    table
+        tr#template-playlist-item
+            td.playlist-item-num
+            td.playlist-item-artist
+            td
+                a.playlist-item-url.playlist-item-title(href="")
+            td.playlist-item-time
+
