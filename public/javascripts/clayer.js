@@ -1,92 +1,125 @@
 var clayer = {
 
-    session: {},
+  session: {},
 
-    init: function(session) {
-        this.session = session;
-        // Init ui
+  init: function (session) {
+    this.session = session;
+    // Init ui
 
-        this.initUI();
+    this.initUI();
 
+    // Load user playlists
 
-        // Load user playlists
+    this.initUser();
 
-        this.initUser();
+  },
+  initUI: function () {
 
-    },
-    initUI: function() {
+    this.player = new MediaElementPlayer("#control-player", {
+      features: ['current', 'progress', 'duration', 'tracks', 'volume'],
+      defaultAudioHeight: "36px",
+      success: function (mediaElement, domObject) {
+        mediaElement.addEventListener('ended', clayer.next, false);
 
-        this.player =  new MediaElementPlayer("#control-player", {defaultAudioHeight: "36px",
-            success: function (mediaElement, domObject) {
+        mediaElement.addEventListener('pause', function () {
 
-                // add event listener
-                mediaElement.addEventListener('ended', clayer.next, false);
-            }
+          $("#control-playpause i").removeClass('icon-pause').addClass('icon-play');
         });
 
-        VK.Api.call('users.get', {uids: [this.session.mid], fields:'nickname'}, function(r) {
-              $("#get_login").text(r.response[0].nickname);
+        mediaElement.addEventListener('play', function () {
+          $("#control-playpause i").removeClass('icon-play').addClass('icon-pause');
         });
+      }
+    });
 
-        $("#do_search").submit(function(){
-            VK.Api.call('audio.search', {q: $("#get_search_query").val(), count: 200}, clayer.searchResults);
-            return false;
-        });
+    $("#do_search").submit(function () {
+      vk.call('audio.search', {q: $("#get_search_query").val(), count: 200}, clayer.searchResults);
+      return false;
+    });
 
-        $("#do_search_submit").click(function(){
-            $("#do_search").trigger('submit');
-            return false;
-        });
+    $("#do_search_submit").click(function () {
+      $("#do_search").trigger('submit');
+      return false;
+    });
 
+    $("#container").on("click", "a.playlist-item-title", function () {
+      $("#container-playlist .current").removeClass('current');
+      $(this).parents('tr').addClass('current');
+      clayer.play($(this).attr('href'));
+      return false;
+    });
 
-        $("#container-playlist").on("click", "a", function() {
-            $(this).addClass('current');
-            return clayer.play($(this).attr('href'));
-        });
-
-    },
-
-    play: function(url) {
-        clayer.player.setSrc(url);
+    $("#control-playpause").on('click', function () {
+      if (clayer.player.media.paused) {
         clayer.player.play();
+      } else {
+        clayer.player.pause();
+      }
 
-        return false;
-    },
+    });
 
-    next: function(event) {
-        var $current = $('#container-playlist .current').removeClass('current');
-        var $next = $current.parents('tr').next().find('a');
-        $next.addClass('current');
-        clayer.play($next.attr('href'));
-    },
+    $("#control-backward").on('click', function () {
+      clayer.prev();
+      return false;
+    });
 
-    initUser: function(){
-        VK.Api.call('audio.getAlbums', {uid: this.session.mid}, function(r) {
-            // TODO: add playlist loading
-        })
-    },
+    $("#control-forward").on('click', function () {
+      clayer.next();
+      return false;
+    });
 
-    searchResults: function(r) {
-        console.log(r);
-        var $playlist = $("#container-playlist").find('tbody').html('').end();
+  },
 
-        var $playlistItemTemplate = $("#template-playlist-item");
+  play: function (url) {
+    clayer.player.setSrc(url);
+    clayer.player.play();
 
-        $.each(r.response, function(index, elem){
-            if (typeof elem == 'object') {
+    return false;
+  },
 
-                var playlistItem = $playlistItemTemplate.clone().removeAttr('id')
-                    .find('.playlist-item-artist').text(elem.artist).end()
-                    .find('.playlist-item-title').text(elem.title).end()
-                    .find('.playlist-item-time').text(elem.duration).end()
-                    .find('.playlist-item-url').attr('href', elem.url).end();
+  next: function () {
+    var $current = $('#container-playlist .current').removeClass('current');
+    var $next = $current.next().find('a');
+    $next.parents('tr').addClass('current');
+    clayer.play($next.attr('href'));
+  },
 
-                playlistItem.appendTo($playlist);
+  prev: function () {
+    var $current = $('#container-playlist .current').removeClass('current');
+    var $next = $current.prev().find('a');
+    $next.parents('tr').addClass('current');
+    clayer.play($next.attr('href'));
+  },
 
-            }
+  initUser: function () {
 
+  },
 
-        })
-    }
+  searchResults: function (r) {
+    $("#container").html($('#playlist-template').text());
+
+    var $playlist = $("#container-playlist").find('tbody').html('');
+
+    var $playlistItemTemplate = $($("#playlist-item-template").text());
+
+    $.each(r.response, function (index, elem) {
+
+      if (typeof elem == 'object') {
+
+        var duration = moment.duration(elem.duration, 's');
+        var title = elem.title.length > 80 ? (elem.title.substring(0, 80) + '...') : elem.title;
+
+        var playlistItem = $playlistItemTemplate.clone()
+          .find('.playlist-item-artist').text(elem.artist).end()
+          .find('.playlist-item-title').text(title).end()
+          .find('.playlist-item-time').text(duration.humanize()).end()
+          .find('.playlist-item-url').attr('href', elem.url).end();
+
+        playlistItem.appendTo($playlist);
+
+      }
+
+    })
+  }
 
 };

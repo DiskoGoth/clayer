@@ -1,25 +1,9 @@
 $(document).ready(function(){
 
-    var authInfo = function(response) {
-        if (response.session) {
-            clayer.init(response.session);
-        } else {
-            // alert('not auth');
-        }
-    };
+  auth.init();
 
-    VK.init({
-        apiId: 3007617
-    });
+  vk.init();
 
-    $("#do_login").click(function(){
-        VK.Auth.login(authInfo);
-        return false;
-    })
-
-    VK.Auth.getLoginStatus(authInfo);
+  clayer.init();
 
 });
-
-
-

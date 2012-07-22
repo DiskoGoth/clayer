@@ -15,6 +15,33 @@ body {
     background-color: #ffffff;
 }
 
-.hidden {
+.playlist-item-actions {
+    width: 45px;
+}
+
+.playlist-item-time {
+    white-space: nowrap;
+    width: 60px;
+}
+
+.playlist-item-title {
+    white-space: nowrap;
+}
+
+#container-playlist td {
+    line-height: 12px;
+    padding: 4px;
+}
+
+#container-playlist tr .playlist-item-num i.nowplaying {
     display: none;
+}
+
+#container-playlist tr.current .playlist-item-num i.nowplaying {
+    display: block;
+}
+
+#player-controls a {
+    line-height: 23px;
+    padding: 10px 2px 10px;
 }

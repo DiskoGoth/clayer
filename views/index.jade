@@ -1,7 +1,22 @@
 extends layout
 
+block append links
+    link(rel='stylesheet', href='/stylesheets/mediaelementplayer.css')
+
 block append scripts
+    script(src='/javascripts/mediaelement-and-player.min.js')
+    script(type='text/javascript', src='/javascripts/auth.js')
+    script(type='text/javascript', src='/javascripts/clayer.js')
     script(type='text/javascript', src='/javascripts/main.js')
+    script(type='text/javascript', src='/javascripts/vk.api.js')
+    - if (everyauth.loggedIn)
+        script
+            var access_token = "#{everyauth.vkontakte.accessToken}";
+
+    script#playlist-template(type='text/html')
+        include templates/playlist
+    script#playlist-item-template(type='text/html')
+        include templates/playlist-item
 
 block append body
     .navbar.navbar-fixed-top
@@ -13,15 +28,30 @@ block append body
                     &nbsp;
                     a#do_search_submit(href="#")
                         i.icon-music.icon-white
-                ul.nav.pull-left
-                    li
-                        audio#control-player(src="/mp3/test.mp3")
-                ul.nav.pull-right
-                    li
-                        a#do_login(href="#")
-                            i.icon-user.icon-white
+                ul.nav.pull-left#player-controls
+                    li: a#control-backward(href="#")
+                        i.icon-backward.icon-white
+                    li: a#control-playpause(href="#")
+                        i.icon-play.icon-white
+                    li: a#control-forward(href="#")
+                        i.icon-forward.icon-white
+                    li: audio#control-player(src="/mp3/test.mp3")
+                div.btn-group.pull-right
+                    - if (everyauth.loggedIn)
+                        a(href="#",data-toggle="dropdown").btn.dropdown-toggle
+                            i.icon-user
                             &nbsp;
-                            span#get_login Войти ВКонтакте
+                            != everyauth.vkontakte.user.nickname
+                            &nbsp;
+                            span.caret
+                        ul.dropdown-menu
+                            li: a(href="/logout") Logout
+                    - else
+                        a#do_login(href="#",data-toggle="dropdown").btn.dropdown-toggle
+                            i.icon-user
+                            &nbsp;
+                            span#get_login Login
+
     .container-fluid
         .row-fluid
             .span3
@@ -36,20 +66,4 @@ block append body
                         li.nav-header Albums
 
 
-            .span9
-                table#container-playlist.table.table-striped
-                    thead
-                        th #
-                        th Artist
-                        th Title
-                        th Time
-
-block append hidden
-    table
-        tr#template-playlist-item
-            td.playlist-item-num
-            td.playlist-item-artist
-            td
-                a.playlist-item-url.playlist-item-title(href="")
-            td.playlist-item-time
-
+            .span9#container

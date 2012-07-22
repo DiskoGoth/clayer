@@ -5,10 +5,13 @@
   , "author": "Dmitry Chirkin <dmitry.chirkin@gmail.com>"
   , "private": true
   , "dependencies": {
-      "express": "latest"
-    , "jade": "latest"
-    , "socket.io" : "lastest"
-    , "mongoose"  : "latest"
+      "express": ">=3.0"
+    , "jade": ">=0.26.3"
+    , "everyauth": ">=0.2.32"
+    , "socket.io" : ">=0.9.6"
+    , "mongoose"  : ">=2.7.2"
+    , "connect"   : ">=2.3.9"
+    , "lastfm" : ">=0.8.1"
   }
   , "scripts": {
     "start": "node app.js",
