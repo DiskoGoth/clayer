@@ -3,6 +3,7 @@ define(['backbone', 'app/views/Toolbar', 'app/views/Sidebar', 'app/views/Playlis
     return Backbone.View.extend({
 
       el: 'body',
+
       template: _.template(mainTemplate),
 
       subviews: {
@@ -13,6 +14,8 @@ define(['backbone', 'app/views/Toolbar', 'app/views/Sidebar', 'app/views/Playlis
 
       render: function () {
         this.$el.append(this.template());
+
+        this.$el.addClass('app');
 
         _.each(this.subviews, function (widget, selector) {
           this.$(selector).replaceWith(widget.render().el);
