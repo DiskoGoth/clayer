@@ -1,4 +1,4 @@
-define(['backbone'], function(Backbone){
+define(['backbone', 'app/collection/playlist'], function(Backbone, playlistCollection){
 
   return Backbone.Router.extend({
     routes: {
@@ -17,7 +17,8 @@ define(['backbone'], function(Backbone){
     },
 
     search: function (keyword) {
-
+      playlistCollection.setParam('q', keyword);
+      playlistCollection.fetch();
     },
 
     radio: function (keyword) {

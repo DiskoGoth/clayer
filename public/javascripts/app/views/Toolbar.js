@@ -1,5 +1,5 @@
-define(['backbone', 'underscore', 'text!app/templates/Toolbar.html', 'text!app/templates/toolbar/loggedin.html'],
-  function(Backbone, _, toolbarTemplate, toolbarLoggedinTemplate) {
+define(['backbone', 'underscore', 'app/collection/playlist', 'text!app/templates/Toolbar.html', 'text!app/templates/toolbar/loggedin.html'],
+  function(Backbone, _, playlistCollection, toolbarTemplate, toolbarLoggedinTemplate) {
     return Backbone.View.extend({
 
       className: 'navbar navbar-fixed-top',
@@ -7,13 +7,21 @@ define(['backbone', 'underscore', 'text!app/templates/Toolbar.html', 'text!app/t
       loggedinTemplate: _.template(toolbarLoggedinTemplate),
 
       events: {
-        'click .login-button': 'doLogin'
+        'click .login-button': 'doLogin',
+        'submit .form-search': 'doSearch'
       },
 
       checkLoginInProgress: false,
 
       initialize: function () {
         this.checkLogin();
+      },
+
+
+      doSearch: function () {
+        var query = this.$('.search-query').val();
+        Backbone.history.navigate('search/' + query, {trigger: true});
+        return false;
       },
 
       doLogin: function () {
@@ -39,9 +47,10 @@ define(['backbone', 'underscore', 'text!app/templates/Toolbar.html', 'text!app/t
 
         this.checkLoginInProgress = $.getJSON('/auth/check', function (result) {
           if (result.data.loggedIn == true) {
-            me.$('.user-info-container').html(result.data.html);
             clearInterval(me.checkLoginInteval);
             me.$('.login-button').replaceWith(me.loggedinTemplate(result.data));
+
+            playlistCollection.setParam('access_token', result.data.vkontakte.accessToken);
           }
           me.checkLoginInProgress = false;
         });
