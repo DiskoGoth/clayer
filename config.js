@@ -2,6 +2,7 @@ var settings = {
 
   uri: 'http://clayer.dev:300',
   port: process.env.PORT || 3000,
+  version: '3',
 
   vkontakte: {
     appId: '3260732',

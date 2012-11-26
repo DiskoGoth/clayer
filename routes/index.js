@@ -1,8 +1,5 @@
-
-/*
- * GET home page.
- */
+var config = require('../config');
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' })
+  res.render('index', { title: 'Last Player v' + config.version })
 };
