@@ -10,7 +10,7 @@ define(['backbone', 'underscore', 'app/models/Track'], function (Backbone, _, Tr
     },
 
     parse: function (response) {
-      return _.rest(response.response, 1); // first item is something not needed
+      return _.rest(response.response, 1); // first item is total amount which is not needed
     },
 
     setParam: function (name, value) {

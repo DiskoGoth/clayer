@@ -1,5 +1,5 @@
-define(['backbone', 'underscore', 'app/collection/playlist', 'text!app/templates/Toolbar.html', 'text!app/templates/toolbar/loggedin.html'],
-  function(Backbone, _, playlistCollection, toolbarTemplate, toolbarLoggedinTemplate) {
+define(['backbone', 'underscore', 'app/views/toolbar/Player', 'app/collection/playlist', 'text!app/templates/Toolbar.html', 'text!app/templates/toolbar/loggedin.html'],
+  function(Backbone, _, ToolbarPlayerView, playlistCollection, toolbarTemplate, toolbarLoggedinTemplate) {
     return Backbone.View.extend({
 
       className: 'navbar navbar-fixed-top',
@@ -15,6 +15,7 @@ define(['backbone', 'underscore', 'app/collection/playlist', 'text!app/templates
 
       initialize: function () {
         this.checkLogin();
+        this.toolbarPlayerView = new ToolbarPlayerView();
       },
 
 
@@ -59,6 +60,7 @@ define(['backbone', 'underscore', 'app/collection/playlist', 'text!app/templates
 
       render: function () {
         this.$el.html(this.template());
+        this.$('.widget-player').replaceWith(this.toolbarPlayerView.render().el);
         return this;
       }
 

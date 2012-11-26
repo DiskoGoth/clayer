@@ -15,9 +15,12 @@ define(['backbone', 'underscore', 'app/views/playlist/Item', 'app/collection/pla
       var me = this;
       this.$('.playlist-table tbody').html('');
 
-      collection.each(function (track) {
+      collection.each(function (track, idx) {
 
-        var trackView = new PlaylistItemView({model: track.toJSON()});
+        var data = track.toJSON();
+        data.idx = idx + 1; // A bit crunchy
+
+        var trackView = new PlaylistItemView({model: data});
         me.trackViews.push(trackView);
         me.$('.playlist-table tbody').append(trackView.render().el);
       });
