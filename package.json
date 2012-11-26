@@ -1,6 +1,10 @@
 {
-    "name": "Clayer"
+  "name": "Last player"
   , "version": "0.0.1"
+  , "engines": {
+    "node": "0.8.x",
+    "npm":  "1.1.x"
+  }
   , "description": "VK.com player based on html5 audio and twitter bootstrap"
   , "author": "Dmitry Chirkin <dmitry.chirkin@gmail.com>"
   , "private": true
