@@ -30,9 +30,8 @@ app.configure('all', function(){
 
 // Routes
 app.get('/', routes.index);
-app.get('/auth/longpoll', routes_auth.longpool);
+app.get('/auth/check', routes_auth.check);
 app.get('/auth/vkontakte/ok', routes_auth.vkontakte_ok);
-
 
 var server = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

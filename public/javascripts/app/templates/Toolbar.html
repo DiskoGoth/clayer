@@ -1,0 +1,44 @@
+<div class="navbar-inner">
+    <div class="container-fluid">
+        <a class="brand" href="/">Last player</a>
+        <form class="form-search navbar-form pull-left" action="#">
+            <div class="input-append">
+                <input class="search-query" type="text" placeholder="Search" />
+                <button class="btn" type="submit">Search</button>
+            </div>
+        </form>
+        <ul class="nav navbar-btngroup pull-left">
+            <li>
+                <div class="btn-group">
+                    <a class="control-backward btn" href="#">
+                        <i class="icon-backward"></i>
+                    </a>
+                    <a class="control-playpause btn" href="#">
+                        <i class="icon-play"></i>
+                    </a>
+                    <a class="control-forward btn" href="#">
+                        <i class="icon-forward"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <div class="progress navbar-progress pull-left progress-striped active" style="width: 300px;">
+            <div class="bar" style="width: 0;"></div>
+        </div>
+        <div class="navbar-text pull-left">&nbsp; 00:00</div>
+        <ul class="nav navbar-btngroup pull-left">
+            <li>
+                <div class="btn-group">
+                    <a class="btn control-volume">
+                        <i class="icon-volume-up"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <a class="btn pull-right login-button" data-loading-text="Logging in...">
+            <i class="icon-user"></i>&nbsp;Login
+        </a>
+        <div class="user-info-container"></div>
+    </div>
+</div>
+<audio class="audio-player"></audio>
