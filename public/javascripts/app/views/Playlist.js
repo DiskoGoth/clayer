@@ -5,11 +5,27 @@ define(['backbone', 'underscore', 'app/views/playlist/Item', 'app/collection/pla
     template: _.template(playlistTemplate),
     collection: playlistCollection,
 
+    events: {
+      'click': 'onTrackPlay' // Deselect other played tracks
+    },
+
     initialize: function () {
       this.collection.on('reset', this.loadPlaylist, this);
     },
 
     trackViews: [],
+
+    onTrackPlay: function (evt) {
+
+      var playedId = $(evt.target).parents('tr').attr('id').split('-')[1],
+        currentTracks =_.where(this.trackViews, {playing: true});
+
+      _.each(currentTracks, function(trackView) {
+        if (trackView.aid != playedId) {
+          trackView.unplay();
+        }
+      })
+    },
 
     loadPlaylist: function (collection) {
       var me = this;
