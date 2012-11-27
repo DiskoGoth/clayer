@@ -41,6 +41,14 @@ body {
   cursor: pointer;
 }
 
-.nowplaying {
+.track-title {
+  width: 15%;
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-animation: scroll 10s linear infinite;
+}
 
+@-webkit-keyframes scroll {
+  0% { text-indent: 15%; }
+  100% { text-indent: -20%; }
 }

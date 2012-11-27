@@ -23,10 +23,6 @@ requirejs.config({
     },
     'jquery.cookie': {
       deps: ['jquery']
-    },
-    'mediaplayer': {
-      deps: 'jquery',
-      exports: 'mejs'
     }
   }
 });
