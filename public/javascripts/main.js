@@ -7,8 +7,7 @@ requirejs.config({
     text: 'requirejs/text',
     async: 'requirejs/async',
     json: 'requirejs/json',
-    'jquery.cookie': 'jquery/cookie',
-    ga: 'http://www.google-analytics.com/ga'
+    'jquery.cookie': 'jquery/cookie'
   },
 
   shim: {
@@ -27,16 +26,13 @@ requirejs.config({
     },
     'jquery.cookie': {
       deps: ['jquery']
-    },
-    ga: {
-      exports: '_gaq'
     }
   }
 });
 
 var errorTimeout;
 
-requirejs(['jquery', 'backbone', 'moment', 'app/router', 'json!/config.js', 'ga', 'jquery.cookie', 'moment/langs/ru', 'bootstrap'], function($, Backbone, moment, Router, config, _gaq){
+requirejs(['jquery', 'backbone', 'moment', 'app/router', 'json!/config.js', 'jquery.cookie', 'moment/langs/ru', 'bootstrap'], function($, Backbone, moment, Router, config){
   $(document)
     .ready(function() {
 
