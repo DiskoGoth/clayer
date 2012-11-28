@@ -20,6 +20,10 @@ if (process.env.NODE_ENV == 'production') {
     appId: '3007617',
       appSecret: 'sLvu0troCTrFlG3rTLwo',
       scope: 'audio,nickname'
+  };
+
+  settings.ga = {
+    id: 'UA-36655976-1'
   }
 }
 

@@ -30,6 +30,7 @@ app.configure('all', function(){
 
 // Routes
 app.get('/', routes.index);
+app.get('/config.js', routes.config);
 app.get('/auth/check', routes_auth.check);
 app.get('/auth/vkontakte/ok', routes_auth.vkontakte_ok);
 

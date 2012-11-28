@@ -4,7 +4,11 @@ requirejs.config({
   waitSeconds: 45,
   paths: {
     app: '/javascripts/app',
-    'jquery.cookie': 'jquery/cookie'
+    text: 'requirejs/text',
+    async: 'requirejs/async',
+    json: 'requirejs/json',
+    'jquery.cookie': 'jquery/cookie',
+    'ga': 'http://www.google-analytics.com/ga'
   },
 
   shim: {
@@ -29,7 +33,7 @@ requirejs.config({
 
 var errorTimeout;
 
-requirejs(['jquery', 'backbone', 'moment', 'app/router', 'jquery.cookie', 'moment/langs/ru', 'bootstrap'], function($, Backbone, moment, Router){
+requirejs(['jquery', 'backbone', 'moment', 'app/router', 'json!/config.js', 'jquery.cookie', 'moment/langs/ru', 'bootstrap', 'ga'], function($, Backbone, moment, Router, config){
   $(document)
     .ready(function() {
 
@@ -63,4 +67,11 @@ requirejs(['jquery', 'backbone', 'moment', 'app/router', 'jquery.cookie', 'momen
       errorTimeout = setTimeout(function(){ $('.ajax-error').alert('close')}, 5000);
 
     });
+
+  if (config.hasOwnProperty('ga')) {
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', config.ga.id]);
+    _gaq.push(['_trackPageview']);
+  }
+
 });
