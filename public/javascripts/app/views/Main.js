@@ -21,6 +21,8 @@ define(['backbone', 'app/views/Toolbar', 'app/views/Sidebar', 'app/views/Playlis
           this.$(selector).replaceWith(widget.render().el);
         }, this);
 
+        this.subviews['.widget-toolbar'].subviews['.widget-player'].playlistView = this.subviews['.widget-playlist'];
+
         return this;
       }
 

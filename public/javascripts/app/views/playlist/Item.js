@@ -11,6 +11,10 @@ define(['backbone', 'underscore', 'app/models/player', 'text!app/templates/playl
 
       playing: false,
 
+      initialize: function () {
+        this.trackNumber = this.options.trackNumber;
+      },
+
       play: function () {
         var $trackNumber = this.$('.track-number');
 
@@ -18,7 +22,6 @@ define(['backbone', 'underscore', 'app/models/player', 'text!app/templates/playl
 
         this.aid = this.model.aid;
         this.playing = true;
-        this.trackNumber = $trackNumber.text();
 
         $trackNumber.html('<i class="icon-bullhorn"></i>');
         this.$el.addClass('info').attr('id', 'aid-' + this.model.aid);
@@ -26,7 +29,7 @@ define(['backbone', 'underscore', 'app/models/player', 'text!app/templates/playl
 
       unplay: function () {
         this.playing = false;
-        this.$('.track-number').html(this.trackNumber);
+        this.$('.track-number').html(this.trackNumber + 1);
         this.$el.removeClass('info');
       },
 

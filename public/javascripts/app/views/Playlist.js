@@ -15,6 +15,15 @@ define(['backbone', 'underscore', 'app/views/playlist/Item', 'app/collection/pla
 
     trackViews: [],
 
+    playNext: function () {
+     var currentTrack =_.where(this.trackViews, {playing: true})[0];
+
+     _.find(this.trackViews, function (trackView) {
+      return trackView.trackNumber == currentTrack.trackNumber + 1;
+     }).$el.find('.track-number').trigger('click');
+
+    },
+
     onTrackPlay: function (evt) {
 
       var playedId = $(evt.target).parents('tr').attr('id').split('-')[1],
@@ -36,7 +45,7 @@ define(['backbone', 'underscore', 'app/views/playlist/Item', 'app/collection/pla
         var data = track.toJSON();
         data.idx = idx + 1; // A bit crunchy
 
-        var trackView = new PlaylistItemView({model: data});
+        var trackView = new PlaylistItemView({model: data, trackNumber: idx});
         me.trackViews.push(trackView);
         me.$('.playlist-table tbody').append(trackView.render().el);
       });

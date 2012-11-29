@@ -58,6 +58,9 @@ define(['backbone', 'underscore', 'app/models/player', 'text!app/templates/toolb
         timeupdate: function (evt) {
           var percentage = evt.target.currentTime / evt.target.duration * 100;
           this.$('.control-progress').css('width', percentage + '%');
+        },
+        ended: function () {
+          this.playlistView.playNext();
         }
       },
 

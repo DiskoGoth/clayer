@@ -11,13 +11,15 @@ define(['backbone', 'underscore', 'app/views/toolbar/Player', 'app/collection/pl
         'submit .form-search': 'doSearch'
       },
 
+      subviews: {
+        '.widget-player': new ToolbarPlayerView()
+      },
+
       checkLoginInProgress: false,
 
       initialize: function () {
         this.checkLogin();
-        this.toolbarPlayerView = new ToolbarPlayerView();
       },
-
 
       doSearch: function () {
         var query = this.$('.search-query').val();
@@ -60,7 +62,7 @@ define(['backbone', 'underscore', 'app/views/toolbar/Player', 'app/collection/pl
 
       render: function () {
         this.$el.html(this.template());
-        this.$('.widget-player').replaceWith(this.toolbarPlayerView.render().el);
+        this.$('.widget-player').replaceWith(this.subviews['.widget-player'].render().el);
         return this;
       }
 
