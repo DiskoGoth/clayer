@@ -4,9 +4,11 @@ define(['backbone', 'underscore', 'app/models/player', 'text!app/templates/toolb
 
       template: _.template(toolbarPlayerTemplate),
       model: playerModel,
+      className: 'toolbar-player',
 
       events: {
-        'click .control-playpause': 'playpause'
+        'click .control-playpause': 'playpause',
+        'click .control-seek': 'seekTo'
       },
 
       initialize: function () {
@@ -40,12 +42,22 @@ define(['backbone', 'underscore', 'app/models/player', 'text!app/templates/toolb
         return this;
       },
 
+      seekTo: function (evt) {
+        var seekTo = evt.offsetX / $(evt.currentTarget).width();
+        this.playerControl.currentTime = this.playerControl.duration * seekTo;
+      },
+
       controls: {
         pause: function () {
           this.$('.control-playpause i').removeClass('icon-pause').addClass('icon-play');
         },
         play: function () {
           this.$('.control-playpause i').removeClass('icon-play').addClass('icon-pause');
+        },
+
+        timeupdate: function (evt) {
+          var percentage = evt.target.currentTime / evt.target.duration * 100;
+          this.$('.control-progress').css('width', percentage + '%');
         }
       },
 
