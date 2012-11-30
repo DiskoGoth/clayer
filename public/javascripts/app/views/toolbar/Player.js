@@ -8,7 +8,14 @@ define(['backbone', 'underscore', 'app/models/player', 'text!app/templates/toolb
 
       events: {
         'click .control-playpause': 'playpause',
-        'click .control-seek': 'seekTo'
+        'click .control-seek': 'seekTo',
+        'click .control-timer': 'toogleTimer'
+      },
+
+      timer: 'left', // or 'elapsed'
+
+      toogleTimer: function () {
+        this.timer = this.timer == 'left' ? 'elapsed' : 'left';
       },
 
       initialize: function () {
@@ -56,8 +63,21 @@ define(['backbone', 'underscore', 'app/models/player', 'text!app/templates/toolb
         },
 
         timeupdate: function (evt) {
-          var percentage = evt.target.currentTime / evt.target.duration * 100;
+          var currentTime = Math.floor(evt.target.currentTime),
+            elapsedMinutes = ("0" + Math.floor(currentTime / 60)).slice(-3),
+            elapsedSeconds = ("0" + currentTime % 60).slice(-2),
+            durationTime =  Math.floor(evt.target.duration - evt.target.currentTime),
+            durationMinutes = ("0" + Math.floor(durationTime / 60)).slice(-3),
+            durationSeconds = ("0" + durationTime % 60).slice(-2),
+            percentage = evt.target.currentTime / evt.target.duration * 100;
+
           this.$('.control-progress').css('width', percentage + '%');
+
+          if (this.timer == 'elapsed') {
+            this.$('.control-timer').html(elapsedMinutes + ":" + elapsedSeconds);
+          } else { // timer == 'elapsed'
+            this.$('.control-timer').html("-" + durationMinutes + ":" + durationSeconds);
+          }
         },
         ended: function () {
           this.playlistView.playNext();

@@ -14,6 +14,7 @@ body {
 .navbar-progress {
   margin-top: 10px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .navbar-meter {
@@ -51,4 +52,9 @@ body {
 @-webkit-keyframes scroll {
   0% { text-indent: 15%; }
   100% { text-indent: -20%; }
+}
+
+.control-timer {
+  padding-left: 10px;
+  cursor: pointer;
 }
