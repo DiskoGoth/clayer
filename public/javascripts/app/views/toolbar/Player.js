@@ -1,7 +1,7 @@
 define(['backbone', 'underscore', 'app/models/player', 'text!app/templates/toolbar/Player.html'],
   function (Backbone, _, playerModel, toolbarPlayerTemplate) {
     return Backbone.View.extend({
-
+      _moduleName: 'toolbar/Player',
       template: _.template(toolbarPlayerTemplate),
       model: playerModel,
       className: 'toolbar-player',

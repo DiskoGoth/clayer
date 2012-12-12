@@ -1,8 +1,9 @@
-define(['backbone', 'app/collection/playlist'], function(Backbone, playlistCollection){
+define(['backbone', 'app/collection/playlist', 'app/views/Main'], function(Backbone, playlistCollection, MainView){
 
   return Backbone.Router.extend({
     routes: {
       '': 'index',
+      'search': 'lastSearch',
       'search/:keyword': 'search',
       'radio/library': 'radioLibrary',
       'radio/mix': 'radioMix',
@@ -11,29 +12,30 @@ define(['backbone', 'app/collection/playlist'], function(Backbone, playlistColle
       'radio/recommended': 'radioRecommended',
       'radio/search': 'radioSearch',
       'radio/:keyword': 'radio',
-      'settings': 'settings',
-      'accounts': 'accounts'
-
+      'settings': 'settings'
     },
+
+    mainView: new MainView(),
 
     search: function (keyword) {
       playlistCollection.setParam('q', keyword);
       playlistCollection.fetch();
     },
 
+    lastSearch: function() {
+      this.mainView.loadContent('Playlist');
+    },
+
     radio: function (keyword) {
 
     },
 
+    settings: function () {
+      this.mainView.loadContent('Settings');
+    },
+
     index: function () {
-
-      require(['app/views/Main'], function(MainView){
-
-        var mainView = new MainView();
-        mainView.render();
-
-      });
-
+      this.mainView.render();
     }
   });
 

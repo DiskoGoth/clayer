@@ -1,6 +1,7 @@
 define(['backbone', 'underscore', 'app/models/player', 'text!app/templates/playlist/Item.html'],
   function (Backbone, _, playerModel, playlistItemTemplate){
     return Backbone.View.extend({
+      _moduleName: 'playlist/Item',
       tagName: 'tr',
       className: 'playlist-item',
       template: _.template(playlistItemTemplate),

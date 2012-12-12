@@ -1,7 +1,7 @@
 define(['backbone', 'underscore', 'app/views/toolbar/Player', 'app/collection/playlist', 'text!app/templates/Toolbar.html', 'text!app/templates/toolbar/loggedin.html'],
   function(Backbone, _, ToolbarPlayerView, playlistCollection, toolbarTemplate, toolbarLoggedinTemplate) {
     return Backbone.View.extend({
-
+      _moduleName: 'Toolbar',
       className: 'navbar navbar-fixed-top',
       template: _.template(toolbarTemplate),
       loggedinTemplate: _.template(toolbarLoggedinTemplate),
